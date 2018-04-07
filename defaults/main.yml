@@ -1,0 +1,67 @@
+---
+# Define the installation method: [git|composer]
+magento2_installation_method: composer
+# The URL to clone the git repository from:
+magento2_installation_git_url: https://github.com/magento/magento2.git
+# The version to checkout:
+magento2_installation_git_version: 2.2
+# Set which version should be installed: [community|enterprise]
+magento2_installation_version: community
+# Wheater the file system ownership should be set: [Yes|No]
+magento2_execute_filesystem_mode: No
+# The env.php file to override the generated one:
+magento2_override_env_file: null
+# The config.php file to override the generated one:
+magento2_override_config_file: null
+# Path to media folder that is shared:
+magento2_shared_media_folder: null
+# Path of Magento 2's installation parent folder:
+magento2_installation_parent: /var/www
+# Name of Magento 2's installation folder:
+magento2_installation_name: magento2
+# The file system user that should be used: [null]
+# Requires:
+# - magento2_execute_filesystem_mode: Yes
+magento2_runtime_user: null
+# The file system group that should be used: [null]
+# Requires:
+# - magento2_execute_filesystem_mode: Yes
+magento2_runtime_group: null
+# The file system permissions to be set: [null]
+# Requires:
+# - magento2_execute_filesystem_mode: Yes
+magento2_runtime_group: null
+# Set Magento runtime mode: [developer|default|production]
+magento2_runtime_mode: default
+# Execute the initial magento setup:install: [Yes|No]
+magento2_execute_setup: Yes
+# Define the parameters and their values for the magento 2 setup:
+magento2_setup_parameters:
+  - name: base-url
+    value: http://127.0.0.1/magento2/
+  - name: db-host
+    value: localhost
+  - name: db-name
+    value: magento
+  - name: db-user
+    value: magento
+  - name: db-password
+    value: magento
+  - name: admin-firstname
+    value: Magento
+  - name: admin-lastname
+    value: User
+  - name: admin-email
+    value: user@example.com
+  - name: admin-user
+    value: admin
+  - name: admin-password
+    value: admin123
+  - name: language
+    value: en_US
+  - name: currency
+    value: USD
+  - name: timezone
+    value: America/Chicago
+  - name: use-rewrites
+    value: "1"

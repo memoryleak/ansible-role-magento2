@@ -1,0 +1,15 @@
+---
+- name: Clone Magento 2 repository.
+  git: 
+    accept_hostkey: Yes
+    clone: yes
+    dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    repo: "{{ magento2_installation_git_url }}"
+    version: "{{ magento2_installation_git_version }}"
+  tags: ['git']
+
+- name: Update Magento 2 project.
+  composer: 
+    command: update
+    working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+  tags: ['composer']

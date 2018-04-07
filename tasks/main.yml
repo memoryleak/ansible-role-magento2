@@ -1,0 +1,29 @@
+---
+# tasks file for memoryleak.magento2
+# - name: Import initialization tasks.
+#   import_tasks: initialization.yml
+#   tags: ['import_tasks']
+
+# - name: Include installation method tasks.
+#   include_tasks: "installation-{{ magento2_installation_method }}.yml"
+#   tags: ['include_tasks']
+
+
+- name: Compile paramater list for Magento 2 setup:install.
+  set_fact: 
+    magento2_setup_parameters_generated: "{{ magento2_setup_parameters_generated | append([ '--{{ item.name }}={{ item.value }}' ])}} + "
+  tags: ['set_fact']
+  with_items: "{{ magento2_setup_parameters }}"
+
+- name: Name for debug module.
+  debug: 
+    var: magento2_setup_parameters_generated
+  tags: ['debug']
+
+
+# - name: Start Magento 2 installation.
+#   shell: "php bin/magento setup:install magento2_setup_parameters"
+#     chdir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+#     creates:
+#     executable: php
+#   tags: ['shell']

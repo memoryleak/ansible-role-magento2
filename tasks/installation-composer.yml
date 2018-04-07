@@ -1,0 +1,7 @@
+---
+- name: Create Magento 2 project.
+  composer: 
+    arguments: "magento/project-{{ magento2_installation_version }}-edition {{ magento2_installation_name }}"
+    command: create-project
+    working_dir: "{{ magento2_installation_parent }}"
+  tags: ['composer']
