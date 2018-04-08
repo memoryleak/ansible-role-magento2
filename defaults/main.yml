@@ -29,6 +29,12 @@ magento2_runtime_user: null
 magento2_runtime_group: null
 # Set Magento runtime mode: [developer|default|production]
 magento2_runtime_mode: default
+# Language to deploy content for
+magento2_deploy_langauges: en_US
+# Value to use for cli magento operations: memory limit
+magento2_cli_memory_limit: 2048M
+# Value to use for cli magento operations: timeout
+magento2_cli_timeout: 3600
 # Execute the initial magento setup:install: [Yes|No]
 magento2_execute_setup: Yes
 # Define the parameters and their values for the magento 2 setup:

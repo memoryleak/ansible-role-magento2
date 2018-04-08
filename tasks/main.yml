@@ -37,10 +37,51 @@
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/config.php"
     src: "{{ magento2_override_config_file }}"
   tags: ['copy']
+  when: magento2_override_config_file
 
 - name: Copy env.php if provided.
   become_user: "{{magento2_runtime_user}}"
   copy:
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/env.php"
-    src: "{{ magento2_override_config_file }}"
+    src: "{{ magento2_override_env_file }}"
   tags: ['copy']
+  when: magento2_override_env_file
+
+- name: Delete existing media folder
+  become_user: "{{magento2_runtime_user}}"
+  file:
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/pub/media"
+    state: absent
+  tags: ['file']
+
+- name: Create symlink for media folder
+  become_user: "{{magento2_runtime_user}}"
+  file:
+    group: php-fpm
+    mode: 0775
+    owner: php-fpm
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/pub/media"
+    src: "{{ magento2_shared_media_folder }}"
+    state: link
+  tags: ['file']
+
+- name: Magento upgrade.
+  become_user: "{{magento2_runtime_user}}"
+  shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:upgrade"
+  tags: ['Magento', 'shell']
+
+- name: Magento - set run mode.
+  become_user: "{{magento2_runtime_user}}"
+  shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento deploy:mode:set {{ magento2_runtime_mode }} --skip-compilation"
+  tags: ['Magento', 'shell']
+
+- name: Magento recompile.
+  become_user: "{{magento2_runtime_user}}"
+  shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:di:compile
+  tags: ['Magento', 'shell']
+  when: magento2_runtime_mode != "developer"
+
+- name: Magento content deploy.
+  become_user: "{{magento2_runtime_user}}"
+  shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ magento2_deploy_langauges }}
+  tags: ['Magento', 'shell']
