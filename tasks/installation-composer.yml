@@ -1,7 +1,23 @@
 ---
+- name: Check if Magento 2 installation project folder exists.
+  stat:
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+  tags: ['stat', 'initialization']
+  register: var_magento2_installation_name
+
 - name: Create Magento 2 project.
-  composer: 
-    arguments: "magento/project-{{ magento2_installation_version }}-edition {{ magento2_installation_name }}"
+  become_user: "{{magento2_runtime_user}}"
+  composer:
+    arguments: "--repository-url=https://repo.magento.com/ magento/project-{{ magento2_installation_version }}-edition {{ magento2_installation_name }}"
     command: create-project
     working_dir: "{{ magento2_installation_parent }}"
   tags: ['composer']
+  when: not var_magento2_installation_name.stat.exists
+
+- name: Update Magento 2 project.
+  become_user: "{{magento2_runtime_user}}"
+  composer:
+    command: update
+    working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+  tags: ['composer']
+  when: var_magento2_installation_name.stat.exists

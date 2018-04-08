@@ -27,10 +27,6 @@ magento2_runtime_user: null
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
 magento2_runtime_group: null
-# The file system permissions to be set: [null]
-# Requires:
-# - magento2_execute_filesystem_mode: Yes
-magento2_runtime_group: null
 # Set Magento runtime mode: [developer|default|production]
 magento2_runtime_mode: default
 # Execute the initial magento setup:install: [Yes|No]
