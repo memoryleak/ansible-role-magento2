@@ -10,11 +10,11 @@ magento2_installation_version: community
 # Wheater the file system ownership should be set: [Yes|No]
 magento2_execute_filesystem_mode: No
 # The env.php file to override the generated one:
-magento2_override_env_file: null
+magento2_override_env_file: None
 # The config.php file to override the generated one:
-magento2_override_config_file: null
+magento2_override_config_file: None
 # Path to media folder that is shared:
-magento2_shared_media_folder: null
+magento2_shared_media_folder: None
 # Path of Magento 2's installation parent folder:
 magento2_installation_parent: /var/www
 # Name of Magento 2's installation folder:
@@ -22,13 +22,13 @@ magento2_installation_name: magento2
 # The file system user that should be used: [null]
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
-magento2_runtime_user: null
+magento2_runtime_user: None
 # The file system group that should be used: [null]
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
-magento2_runtime_group: null
-# Set Magento runtime mode: [developer|default|production]
-magento2_runtime_mode: default
+magento2_runtime_group: None
+# Set Magento runtime mode: [developer|production]
+magento2_runtime_mode: production
 # Language to deploy content for
 magento2_deploy_langauges: en_US
 # Value to use for cli magento operations: memory limit
