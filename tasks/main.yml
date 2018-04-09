@@ -40,7 +40,7 @@
   when: magento2_override_config_file
 
 - name: Copy env.php if provided.
-  become_user: "{{magento2_runtime_user}}"
+  become_user: "{{ magento2_runtime_user }}"
   copy:
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/env.php"
     src: "{{ magento2_override_env_file }}"
@@ -57,9 +57,6 @@
 - name: Create symlink for media folder
   become_user: "{{magento2_runtime_user}}"
   file:
-    group: php-fpm
-    mode: 0775
-    owner: php-fpm
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/pub/media"
     src: "{{ magento2_shared_media_folder }}"
     state: link
