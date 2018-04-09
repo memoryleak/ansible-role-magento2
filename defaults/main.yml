@@ -5,6 +5,8 @@ magento2_installation_method: composer
 magento2_installation_git_url: https://github.com/magento/magento2.git
 # The version to checkout:
 magento2_installation_git_version: 2.2
+# The private key to use for git clone
+magento2_installation_git_key: None
 # Set which version should be installed: [community|enterprise]
 magento2_installation_version: community
 # Wheater the file system ownership should be set: [Yes|No]

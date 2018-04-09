@@ -37,7 +37,7 @@
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/config.php"
     src: "{{ magento2_override_config_file }}"
   tags: ['copy']
-  when: magento2_override_config_file
+  when: magento2_override_config_file != None
 
 - name: Copy env.php if provided.
   become_user: "{{ magento2_runtime_user }}"
@@ -45,7 +45,7 @@
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/env.php"
     src: "{{ magento2_override_env_file }}"
   tags: ['copy']
-  when: magento2_override_env_file
+  when: magento2_override_env_file != None
 
 - name: Delete existing media folder
   become_user: "{{magento2_runtime_user}}"
@@ -82,3 +82,14 @@
   become_user: "{{magento2_runtime_user}}"
   shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ magento2_deploy_langauges }}
   tags: ['Magento', 'shell']
+
+- name: Set proper ownwernship of repository files.
+  file: 
+    group: "{{magento2_runtime_group}}"
+    mode: 0775
+    owner: "{{magento2_runtime_user}}"
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    recurse: Yes
+    state: directory
+  tags: ['file']
+  
