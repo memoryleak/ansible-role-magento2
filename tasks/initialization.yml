@@ -20,16 +20,3 @@
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
   tags: ['stat', 'initialization']
   register: var_magento2_installation_name
-
-- name: Assert that Magento2 installation destination folder exists and is writeable.
-  become_user: "{{ magento2_runtime_user }}"
-  assert:
-    that:
-      - var_magento2_installation_parent.stat.exists
-      - var_magento2_installation_parent.stat.writeable
-  tags: ['assert', 'initialization']
-
-# - name: Assert that Magento2 installation name folder doesn't exists.
-#   assert:
-#     that: not var_magento2_installation_name.stat.exists
-#   tags: ['assert', 'initialization']
