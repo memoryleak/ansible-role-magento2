@@ -31,8 +31,16 @@ magento2_runtime_user: None
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
 magento2_runtime_group: None
+# Whether to execute upgrade
+magento2_execute_upgrade: true
+# Whether to execute compilation
+magento2_execute_compilation: true
+# Whether to set the runmode
+magento2_execute_runmode: true
 # Set Magento runtime mode: [developer|production]
 magento2_runtime_mode: production
+# Whether to deploy content
+magento2_execute_content_deploy: true
 # Language to deploy content for
 magento2_deploy_langauges: en_US
 # Value to use for cli magento operations: memory limit

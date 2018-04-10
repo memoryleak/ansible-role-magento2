@@ -17,11 +17,6 @@
     magento_install_command: "{{ magento_install_command }} --{{ item.name }}='{{ item.value }}'"
   with_items: "{{ magento2_setup_parameters }}"
 
-- name: Print install command to be used for debugging purposes in case something fails.
-  debug:
-    var: magento_install_command
-  tags: ['debug']
-
 - name: Start Magento 2 installation.
   become_user: "{{magento2_runtime_user}}"
   shell: "{{ magento_install_command }}"
@@ -53,6 +48,7 @@
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/pub/media"
     state: absent
   tags: ['file']
+  when: magento2_shared_media_folder != None
 
 - name: Create symlink for media folder
   become_user: "{{magento2_runtime_user}}"
@@ -61,30 +57,34 @@
     src: "{{ magento2_shared_media_folder }}"
     state: link
   tags: ['file']
+  when: magento2_shared_media_folder != None
 
 - name: Magento upgrade.
   become_user: "{{magento2_runtime_user}}"
   shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:upgrade"
   tags: ['Magento', 'shell']
+  when: magento2_execute_upgrade
 
 - name: Magento - set run mode.
   become_user: "{{magento2_runtime_user}}"
   shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento deploy:mode:set {{ magento2_runtime_mode }} --skip-compilation"
   tags: ['Magento', 'shell']
+  when: magento2_execute_runmode
 
 - name: Magento recompile.
   become_user: "{{magento2_runtime_user}}"
   shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:di:compile
   tags: ['Magento', 'shell']
-  when: magento2_runtime_mode != "developer"
+  when: magento2_runtime_mode != "developer" and magento2_execute_compilation
 
 - name: Magento content deploy.
   become_user: "{{magento2_runtime_user}}"
   shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ magento2_deploy_langauges }}
   tags: ['Magento', 'shell']
+  when: magento2_execute_content_deploy
 
 - name: Set proper ownwernship of repository files.
-  file: 
+  file:
     group: "{{magento2_runtime_group}}"
     mode: 0775
     owner: "{{magento2_runtime_user}}"
@@ -92,7 +92,7 @@
     recurse: Yes
     state: directory
   tags: ['file']
-  
+
 - name: Include cron installation tasks.
   include_tasks: "cronjobs.yml"
   tags: ['include_tasks']
