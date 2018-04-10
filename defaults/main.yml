@@ -13,12 +13,16 @@ magento2_installation_git_key: None
 magento2_installation_version: community
 # Wheater the file system ownership should be set: [Yes|No]
 magento2_execute_filesystem_mode: No
-# The env.php file to override the generated one:
+# Whether to override the generated one:
 magento2_override_env_file: false
-# The config.php file to override the generated one:
+# Whether to override the generated one:
 magento2_override_config_file: false
+# The env.php file to override the generated one:
+magento2_override_env_file_name: false
+# The config.php file to override the generated one:
+magento2_override_config_file_name: false
 # Path to media folder that is shared:
-magento2_shared_media_folder: None
+magento2_shared_media_folder: false
 # Whether to install magento crons.
 magento2_install_cron: true
 # Path of Magento 2's installation parent folder:
@@ -28,11 +32,11 @@ magento2_installation_name: magento2
 # The file system user that should be used: [null]
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
-magento2_runtime_user: None
+magento2_runtime_user: false
 # The file system group that should be used: [null]
 # Requires:
 # - magento2_execute_filesystem_mode: Yes
-magento2_runtime_group: None
+magento2_runtime_group: false
 # Whether to execute upgrade
 magento2_execute_upgrade: true
 # Whether to execute compilation
