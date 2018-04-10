@@ -33,7 +33,7 @@
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/config.php"
     src: "{{ magento2_override_config_file }}"
   tags: ['copy']
-  when: magento2_override_config_file != None
+  when: magento2_override_config_file
 
 - name: Copy env.php if provided.
   become_user: "{{ magento2_runtime_user }}"
@@ -41,7 +41,7 @@
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/env.php"
     src: "{{ magento2_override_env_file }}"
   tags: ['copy']
-  when: magento2_override_env_file != None
+  when: magento2_override_env_file
 
 - name: Delete existing media folder
   become_user: "{{magento2_runtime_user}}"

@@ -14,9 +14,9 @@ magento2_installation_version: community
 # Wheater the file system ownership should be set: [Yes|No]
 magento2_execute_filesystem_mode: No
 # The env.php file to override the generated one:
-magento2_override_env_file: None
+magento2_override_env_file: false
 # The config.php file to override the generated one:
-magento2_override_config_file: None
+magento2_override_config_file: false
 # Path to media folder that is shared:
 magento2_shared_media_folder: None
 # Whether to install magento crons.
