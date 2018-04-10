@@ -1,5 +1,6 @@
 ---
 - name: Create Magento 2 installation parent folder.
+  become: Yes
   file:
     group: "{{magento2_runtime_group}}"
     mode: 0755
