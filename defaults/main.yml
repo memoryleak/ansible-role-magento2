@@ -8,19 +8,15 @@ magento2_installation_git_url: https://github.com/magento/magento2.git
 # The version to checkout:
 magento2_installation_git_version: 2.2
 # The private key to use for git clone
-magento2_installation_git_key: None
+magento2_installation_git_key: false
 # Set which version should be installed: [community|enterprise]
 magento2_installation_version: community
-# Whether the file system ownership should be set: [Yes|No]
+# Whether the file system ownership should be set: [true|No]
 magento2_execute_filesystem_mode: No
 # Whether to override the generated one:
 magento2_override_env_file: false
 # Whether to override the generated one:
 magento2_override_config_file: false
-# The env.php file to override the generated one:
-magento2_override_env_file_name: false
-# The config.php file to override the generated one:
-magento2_override_config_file_name: false
 # Path to media folder that is shared:
 magento2_shared_media_folder: false
 # Whether to install magento crons.
@@ -31,11 +27,11 @@ magento2_installation_parent: /var/www
 magento2_installation_name: magento2
 # The file system user that should be used: [null]
 # Requires:
-# - magento2_execute_filesystem_mode: Yes
+# - magento2_execute_filesystem_mode: true
 magento2_runtime_user: false
 # The file system group that should be used: [null]
 # Requires:
-# - magento2_execute_filesystem_mode: Yes
+# - magento2_execute_filesystem_mode: true
 magento2_runtime_group: false
 # Whether to execute upgrade
 magento2_execute_upgrade: true
@@ -53,8 +49,8 @@ magento2_deploy_langauges: en_US
 magento2_cli_memory_limit: 2048M
 # Value to use for cli magento operations: timeout
 magento2_cli_timeout: 3600
-# Execute the initial magento setup:install: [Yes|No]
-magento2_execute_setup: Yes
+# Execute the initial magento setup:install: [true|No]
+magento2_execute_setup: true
 # Define the parameters and their values for the magento 2 setup:
 magento2_setup_parameters:
   - name: base-url

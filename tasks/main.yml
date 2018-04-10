@@ -31,17 +31,17 @@
   become_user: "{{magento2_runtime_user}}"
   copy:
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/config.php"
-    src: "{{ magento2_override_config_file_name }}"
+    src: "{{ magento2_override_config_file }}"
   tags: ['copy']
-  when: magento2_override_config_file
+  when: magento2_override_config_file != false
 
 - name: Copy env.php if provided.
   become_user: "{{ magento2_runtime_user }}"
   copy:
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/app/etc/env.php"
-    src: "{{ magento2_override_env_file_name }}"
+    src: "{{ magento2_override_env_file }}"
   tags: ['copy']
-  when: magento2_override_env_file
+  when: magento2_override_env_file != false
 
 - name: Delete existing media folder
   become_user: "{{magento2_runtime_user}}"
@@ -49,7 +49,7 @@
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}/pub/media"
     state: absent
   tags: ['file']
-  when: magento2_shared_media_folder
+  when: magento2_shared_media_folder != false
 
 - name: Create symlink for media folder
   become_user: "{{magento2_runtime_user}}"
@@ -58,7 +58,7 @@
     src: "{{ magento2_shared_media_folder }}"
     state: link
   tags: ['file']
-  when: magento2_shared_media_folder
+  when: magento2_shared_media_folder != false
 
 - name: Magento upgrade.
   become_user: "{{magento2_runtime_user}}"
@@ -90,7 +90,7 @@
     mode: 0775
     owner: "{{magento2_runtime_user}}"
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
-    recurse: Yes
+    recurse: true
     state: directory
   tags: ['file']
 

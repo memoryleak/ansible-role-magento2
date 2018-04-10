@@ -1,26 +1,36 @@
 ---
+- name: Check if Magento 2 installation project folder exists.
+  stat:
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+  tags: ['stat', 'initialization']
+  register: var_magento2_installation_name
+
 - name: Clone Magento 2 repository (with key).
   become_user: "{{magento2_runtime_user}}"
   git:
-    accept_hostkey: Yes
-    clone: yes
+    accept_hostkey: true
+    clone: true
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
     repo: "{{ magento2_installation_git_url }}"
     version: "{{ magento2_installation_git_version }}"
     key_file: "{{ magento2_installation_git_key }}"
   tags: ['git']
-  when: magento2_installation_git_key != None
+  when:
+    - magento2_installation_git_key != false
+    - var_magento2_installation_name.stat.exists == false
 
 - name: Clone Magento 2 repository (without key).
   become_user: "{{magento2_runtime_user}}"
   git:
-    accept_hostkey: Yes
-    clone: yes
+    accept_hostkey: true
+    clone: true
     dest: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
     repo: "{{ magento2_installation_git_url }}"
     version: "{{ magento2_installation_git_version }}"
   tags: ['git']
-  when: magento2_installation_git_key == None
+  when:
+    - magento2_installation_git_key == false
+    - var_magento2_installation_name.stat.exists == false
 
 - name: Set proper ownwernship of repository files.
   file:
@@ -28,7 +38,7 @@
     mode: 0775
     owner: "{{magento2_runtime_user}}"
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
-    recurse: Yes
+    recurse: true
     state: directory
   tags: ['file']
 
