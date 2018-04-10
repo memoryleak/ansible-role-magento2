@@ -17,6 +17,8 @@ magento2_override_env_file: None
 magento2_override_config_file: None
 # Path to media folder that is shared:
 magento2_shared_media_folder: None
+# Wheter to install magento crons.
+magento2_install_cron: true
 # Path of Magento 2's installation parent folder:
 magento2_installation_parent: /var/www
 # Name of Magento 2's installation folder:

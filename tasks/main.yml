@@ -93,3 +93,7 @@
     state: directory
   tags: ['file']
   
+- name: Include cron installation tasks.
+  include_tasks: "cronjobs.yml"
+  tags: ['include_tasks']
+  when: magento2_install_cron

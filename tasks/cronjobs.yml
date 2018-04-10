@@ -1,0 +1,24 @@
+---
+- name: Register cronjob for magento cron:run.
+  become: true
+  cron:
+    name: "magento_schedule"
+    user: "{{ magento2_runtime_user }}"
+    job: "php {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento cron:run | grep -v \"Ran jobs by schedule\" >> {{ magento2_installation_parent }}/{{ magento2_installation_name }}/var/log/magento.cron.log"
+  tags: ['magento', 'cron']
+
+- name: Register cronjob for update.
+  become: true
+  cron:
+    name: "magento_update"
+    user: "{{ magento2_runtime_user }}"
+    job: "php {{ magento2_installation_parent }}/{{ magento2_installation_name }}/update/cron.php >> {{ magento2_installation_parent }}/{{ magento2_installation_name }}/var/log/update.cron.log"
+  tags: ['magento', 'cron']
+
+- name: Register cronjob for setup.
+  become: true
+  cron:
+    name: "magento_setup"
+    user: "{{ magento2_runtime_user }}"
+    job: "php {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:cron:run >> {{ magento2_installation_parent }}/{{ magento2_installation_name }}/var/log/setup.cron.log"
+  tags: ['magento', 'cron']
