@@ -11,7 +11,7 @@ magento2_installation_git_version: 2.2
 magento2_installation_git_key: None
 # Set which version should be installed: [community|enterprise]
 magento2_installation_version: community
-# Wheater the file system ownership should be set: [Yes|No]
+# Whether the file system ownership should be set: [Yes|No]
 magento2_execute_filesystem_mode: No
 # Whether to override the generated one:
 magento2_override_env_file: false
