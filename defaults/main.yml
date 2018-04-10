@@ -1,4 +1,6 @@
 ---
+# Whether to install Magento
+magento2_execute_install: true
 # Define the installation method: [git|composer]
 magento2_installation_method: composer
 # The URL to clone the git repository from:
