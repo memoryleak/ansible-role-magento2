@@ -26,6 +26,14 @@
     executable: php
   tags: ['shell']
   when: magento2_execute_setup
+  register: magento2_setup_output
+
+- name: Check if installation was successful.
+  assert:
+    msg: "Installation failed"
+    that: magento2_setup_output.stdout.find("Magento installation complete.") == -1
+  tags: ['assert']
+  when: magento2_execute_setup
 
 - name: Copy config.php if provided.
   become_user: "{{magento2_runtime_user}}"
