@@ -44,7 +44,8 @@ magento2_runtime_mode: production
 # Whether to deploy content
 magento2_execute_content_deploy: true
 # Language to deploy content for
-magento2_deploy_langauges: en_US
+magento2_deploy_languages:
+  - en_US
 # Value to use for cli magento operations: memory limit
 magento2_cli_memory_limit: 2048M
 # Value to use for cli magento operations: timeout
@@ -81,3 +82,9 @@ magento2_setup_parameters:
     value: America/Chicago
   - name: use-rewrites
     value: "1"
+
+# WIP:
+# magento2_magento_cli_commands:
+#   - setup:upgrade
+#   - setup:di:compile
+#   - setup:static-content:deploy -f en_US
