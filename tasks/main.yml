@@ -68,23 +68,11 @@
   tags: ['file']
   when: magento2_shared_media_folder != false
 
-- name: Magento upgrade.
+- name: Magento CLI commands.
   become_user: "{{magento2_runtime_user}}"
-  shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:upgrade"
+  shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento {{ item }}"
   tags: ['Magento', 'shell']
-  when: magento2_execute_upgrade
-
-- name: Magento - set run mode.
-  become_user: "{{magento2_runtime_user}}"
-  shell: "php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento deploy:mode:set {{ magento2_runtime_mode }} --skip-compilation"
-  tags: ['Magento', 'shell']
-  when: magento2_execute_runmode
-
-- name: Magento recompile.
-  become_user: "{{magento2_runtime_user}}"
-  shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:di:compile
-  tags: ['Magento', 'shell']
-  when: magento2_runtime_mode != "developer" and magento2_execute_compilation
+  with_items: "{{ magento2_magento_cli_commands }}"
 
 - name: Magento content deploy.
   become_user: "{{magento2_runtime_user}}"

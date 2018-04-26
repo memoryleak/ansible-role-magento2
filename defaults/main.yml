@@ -84,7 +84,7 @@ magento2_setup_parameters:
     value: "1"
 
 # WIP:
-# magento2_magento_cli_commands:
-#   - setup:upgrade
-#   - setup:di:compile
-#   - setup:static-content:deploy -f en_US
+magento2_magento_cli_commands:
+  - setup:upgrade
+  - setup:di:compile
+  - setup:static-content:deploy -f en_US
