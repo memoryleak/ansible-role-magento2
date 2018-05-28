@@ -76,7 +76,7 @@
 
 - name: Magento content deploy.
   become_user: "{{magento2_runtime_user}}"
-  shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ item }}
+  shell: php -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ item }} {{ magento2_execute_content_deploy_force }}
   tags: ['Magento', 'shell']
   when: magento2_execute_content_deploy
   with_items: "{{ magento2_deploy_languages }}"
