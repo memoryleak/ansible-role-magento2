@@ -5,6 +5,12 @@
   tags: ['set_fact']
   when: magento2_execute_content_deploy_force == true
 
+- name: Check if content deploy enforcement is not active.
+  set_fact:
+    __magento2_execute_content_deploy_force: ""
+  tags: ['set_fact']
+  when: magento2_execute_content_deploy_force == false
+
 # tasks file for memoryleak.magento2
 - name: Import initialization tasks.
   import_tasks: initialization.yml
