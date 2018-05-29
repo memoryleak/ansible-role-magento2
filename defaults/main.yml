@@ -43,8 +43,8 @@ magento2_execute_runmode: true
 magento2_runtime_mode: production
 # Whether to deploy content
 magento2_execute_content_deploy: true
-# Use the enforcement parameter for conent deployment [""|"-f"]
-magento2_execute_content_deploy_force: ""
+# Use the enforcement parameter for conent deployment [true|false]
+magento2_execute_content_deploy_force: false
 # Language to deploy content for
 magento2_deploy_languages:
   - en_US
