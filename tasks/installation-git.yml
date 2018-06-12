@@ -32,6 +32,13 @@
     - magento2_installation_git_key == false
     - var_magento2_installation_name.stat.exists == false
 
+- name: Update Magento 2 project.
+  become_user: "{{magento2_runtime_user}}"
+  composer:
+    command: install
+    working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+  tags: ['composer']
+
 - name: Set proper ownwernship of repository files.
   file:
     group: "{{magento2_runtime_group}}"
@@ -41,10 +48,3 @@
     recurse: true
     state: directory
   tags: ['file']
-
-- name: Update Magento 2 project.
-  become_user: "{{magento2_runtime_user}}"
-  composer:
-    command: install
-    working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
-  tags: ['composer']
