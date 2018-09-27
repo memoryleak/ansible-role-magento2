@@ -21,6 +21,10 @@ magento2_override_config_file: false
 magento2_shared_media_folder: false
 # Whether to install magento crons.
 magento2_install_cron: true
+# Whether to install magento crons for updating the system.
+magento2_install_cron_update: true
+# Whether to install magento crons for updating the web updater tasks.
+magento2_install_cron_setup: true
 # Path of Magento 2's installation parent folder:
 magento2_installation_parent: /var/www
 # Name of Magento 2's installation folder:
