@@ -88,7 +88,7 @@
 
 - name: Magento content deploy.
   become_user: "{{magento2_runtime_user}}"
-  shell: php -d opcache.enable=0 -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy {{ __magento2_execute_content_deploy_force }}{{ item }} 
+  shell: php -d opcache.enable=0 -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy --strategy={{ magento2_static_deploy_strategy }} {{ __magento2_execute_content_deploy_force }}{{ item }}
   tags: ['Magento', 'shell']
   when: magento2_execute_content_deploy
   with_items: "{{ magento2_deploy_languages }}"
