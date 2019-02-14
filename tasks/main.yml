@@ -101,6 +101,7 @@
     path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
     recurse: true
     state: directory
+  when: magento2_execute_filesystem_mode
   tags: ['file']
 
 - name: Include cron installation tasks.
