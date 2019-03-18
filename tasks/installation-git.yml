@@ -32,7 +32,7 @@
     - magento2_installation_git_key == false
     - var_magento2_installation_name.stat.exists == false
 
-- name: Update Magento 2 project.
+- name: Install Magento 2 project.
   become_user: "{{magento2_runtime_user}}"
   composer:
     command: install

@@ -14,10 +14,10 @@
   tags: ['composer']
   when: not var_magento2_installation_name.stat.exists
 
-- name: Update Magento 2 project.
+- name: Install Magento 2 project.
   become_user: "{{magento2_runtime_user}}"
   composer:
-    command: update
+    command: Install
     working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
   tags: ['composer']
   when: var_magento2_installation_name.stat.exists
