@@ -86,11 +86,26 @@
   tags: ['Magento', 'shell']
   with_items: "{{ magento2_magento_cli_commands }}"
 
-- name: Magento content deploy.
+- name: Magento content deploy (Default).
+  become_user: "{{magento2_runtime_user}}"
+  shell: php -d opcache.enable=0 -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy --strategy={{ magento2_static_deploy_strategy }} {{ __magento2_execute_content_deploy_force }} {{ magento2_deploy_languages | join(' ') }}
+  tags: ['Magento', 'shell']
+  when: magento2_execute_content_deploy AND
+        magento2_execute_content_deploy_method == "sequential"
+
+- name: Magento content deploy (PCNTL).
   become_user: "{{magento2_runtime_user}}"
   shell: php -d opcache.enable=0 -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy --jobs={{ ansible_processor_vcpus }} --strategy={{ magento2_static_deploy_strategy }} {{ __magento2_execute_content_deploy_force }} {{ magento2_deploy_languages | join(' ') }}
   tags: ['Magento', 'shell']
-  when: magento2_execute_content_deploy
+  when: magento2_execute_content_deploy AND
+        magento2_execute_content_deploy_method == "pcntl"
+
+- name: Magento content deploy (GNU Parallel).
+  become_user: "{{magento2_runtime_user}}"
+  shell: "parallel php -d opcache.enable=0 -d display_errors=1 -d set_time_limit={{ magento2_cli_timeout }} -d memory_limit={{ magento2_cli_memory_limit }} {{ magento2_installation_parent }}/{{ magento2_installation_name }}/bin/magento setup:static-content:deploy --strategy={{ magento2_static_deploy_strategy }} {{ __magento2_execute_content_deploy_force }} ::: {{ magento2_deploy_languages | join(' ') }}"
+  tags: ['Magento', 'shell']
+  when: magento2_execute_content_deploy AND
+        magento2_execute_content_deploy_method == "parallel"
 
 - name: Set proper ownwernship of repository files.
   file:
