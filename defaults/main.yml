@@ -51,6 +51,8 @@ magento2_execute_content_deploy: true
 magento2_execute_content_deploy_force: false
 # Static content deploy strategy. Allowed values are: quick, standard, compact
 magento2_static_deploy_strategy: quick
+# Static content deploy additional parameters.
+magento2_static_deploy_additional_params: ""
 # Language to deploy content for
 magento2_deploy_languages:
   - en_US
