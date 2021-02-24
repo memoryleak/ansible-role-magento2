@@ -110,11 +110,16 @@
     - magento2_execute_content_deploy
     - magento2_execute_content_deploy_method == "parallel"
 
-- name: Import permissions tasks.
-  become: true
-  import_tasks: permissions.yml
-  tags: ['import_tasks']
+- name: Set proper ownwernship of repository files.
+  file:
+    group: "{{magento2_runtime_group}}"
+    mode: 0775
+    owner: "{{magento2_runtime_user}}"
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    recurse: true
+    state: directory
   when: magento2_execute_filesystem_mode
+  tags: ['file']
 
 - name: Include cron installation tasks.
   include_tasks: "cronjobs.yml"

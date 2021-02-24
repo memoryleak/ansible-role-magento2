@@ -38,3 +38,13 @@
     command: install
     working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
   tags: ['composer']
+
+- name: Set proper ownwernship of repository files.
+  file:
+    group: "{{magento2_runtime_group}}"
+    mode: 0775
+    owner: "{{magento2_runtime_user}}"
+    path: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    recurse: true
+    state: directory
+  tags: ['file']
