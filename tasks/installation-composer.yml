@@ -19,5 +19,6 @@
   composer:
     command: Install
     working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    no_dev: "{{ magento2_composer_no_dev }}"
   tags: ['composer']
   when: var_magento2_installation_name.stat.exists
