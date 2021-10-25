@@ -37,6 +37,7 @@
   composer:
     command: install
     working_dir: "{{ magento2_installation_parent }}/{{ magento2_installation_name }}"
+    no_dev: "{{ magento2_composer_no_dev }}"
   tags: ['composer']
 
 - name: Set proper ownwernship of repository files.

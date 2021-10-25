@@ -93,6 +93,9 @@ magento2_setup_parameters:
   - name: use-rewrites
     value: "1"
 
+# Skip installing packages listed in require-dev
+magento2_composer_no_dev: yes
+
 # WIP:
 magento2_magento_cli_commands:
   - setup:upgrade
